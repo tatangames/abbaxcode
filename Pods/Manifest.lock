@@ -1,0 +1,38 @@
+PODS:
+  - Alamofire (5.9.0)
+  - MBProgressHUD (1.2.0)
+  - RxSwift (6.6.0)
+  - SDWebImage (5.19.0):
+    - SDWebImage/Core (= 5.19.0)
+  - SDWebImage/Core (5.19.0)
+  - SwiftyJSON (5.0.1)
+  - Toast-Swift (5.1.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - MBProgressHUD
+  - RxSwift
+  - SDWebImage
+  - SwiftyJSON
+  - Toast-Swift
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - MBProgressHUD
+    - RxSwift
+    - SDWebImage
+    - SwiftyJSON
+    - Toast-Swift
+
+SPEC CHECKSUMS:
+  Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
+  SDWebImage: 981fd7e860af070920f249fd092420006014c3eb
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  Toast-Swift: dd369e68ee529f542c65bd0d0c6c50cd743cf6f2
+
+PODFILE CHECKSUM: 0f5c4af6f359fc3b667d735321f5eb0a29aa8739
+
+COCOAPODS: 1.12.1

@@ -1,0 +1,6 @@
+framework module Pods_AbbaControl_AbbaControlUITests {
+  umbrella header "Pods-AbbaControl-AbbaControlUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
