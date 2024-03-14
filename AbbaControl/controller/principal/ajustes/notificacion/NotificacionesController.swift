@@ -53,9 +53,7 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
                 
         apiSolicitarDatos()
     }
-    
-    
-
+        
     func apiSolicitarDatos(){
         
         MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -181,24 +179,6 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-    /*
-     
-     let union = baseUrlImagen+imageURL
-     
-     if !imageURL.isEmpty {
-         cell.imgFoto.sd_setImage(with: URL(string: "\(union)"), placeholderImage: UIImage(named: "fotodefault"))
-         
-         cell.imgFoto.layer.masksToBounds = false
-         cell.imgFoto.layer.cornerRadius = (cell.imgFoto.frame.height)/2
-         cell.imgFoto.clipsToBounds = true
-       
-        cell.imgFoto.isHidden = false
-     }
-     
-     */
-    
-    
-    
     
     
     // METODOS TABLE VIEW
@@ -252,20 +232,7 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
 
             
         }
-        
-        
-        
     }
-    
-    
-    
-   /* func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let selectedItem = items[indexPath.row]
-        
-       
-    }*/
-    
     
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
