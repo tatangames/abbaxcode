@@ -1,22 +1,14 @@
 //
-//  InsigniaPorGanarCellTableView.swift
+//  MiTituloCell2ViewCell.swift
 //  AbbaControl
 //
-//  Created by Jonathan  Moran on 14/3/24.
+//  Created by Jonathan  Moran on 16/3/24.
 //
 
 import UIKit
 
-class InsigniaPorGanarCellTableView: UITableViewCell {
+class MiTituloCell2ViewCell: UITableViewCell {
 
-    
-    @IBOutlet weak var imgInsignia: UIImageView!
-    @IBOutlet weak var txtNombre: UILabel!
-    @IBOutlet weak var txtDescripcion: UILabel!
-    
-    
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

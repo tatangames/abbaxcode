@@ -38,6 +38,10 @@
 		8F740FAD2BA33E010072BC13 /* NotificacionesCell1TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F740FAC2BA33E010072BC13 /* NotificacionesCell1TableView.swift */; };
 		8F740FAF2BA343430072BC13 /* ModeloNotificacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F740FAE2BA343430072BC13 /* ModeloNotificacion.swift */; };
 		8F740FB12BA367BF0072BC13 /* NotificacionesCell2TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F740FB02BA367BF0072BC13 /* NotificacionesCell2TableView.swift */; };
+		8F740FB42BA3C0C10072BC13 /* InsigniasPorGanarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F740FB32BA3C0C10072BC13 /* InsigniasPorGanarController.swift */; };
+		8F740FB62BA3C18B0072BC13 /* InsigniaPorGanarCellTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F740FB52BA3C18B0072BC13 /* InsigniaPorGanarCellTableView.swift */; };
+		8F740FB82BA3C4FB0072BC13 /* ModeloInsigniaPorGanar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F740FB72BA3C4FB0072BC13 /* ModeloInsigniaPorGanar.swift */; };
+		8F740FBA2BA3C7A60072BC13 /* InsigniaPorGanarCell2TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F740FB92BA3C7A60072BC13 /* InsigniaPorGanarCell2TableView.swift */; };
 		8F88FD4F2B9F54B90014A207 /* ValidarTexto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F88FD4E2B9F54B90014A207 /* ValidarTexto.swift */; };
 		8F88FD582B9F77630014A207 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F88FD572B9F77630014A207 /* NotificationService.swift */; };
 		8F88FD5C2B9F77630014A207 /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8F88FD552B9F77630014A207 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -140,6 +144,10 @@
 		8F740FAC2BA33E010072BC13 /* NotificacionesCell1TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificacionesCell1TableView.swift; sourceTree = "<group>"; };
 		8F740FAE2BA343430072BC13 /* ModeloNotificacion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeloNotificacion.swift; sourceTree = "<group>"; };
 		8F740FB02BA367BF0072BC13 /* NotificacionesCell2TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificacionesCell2TableView.swift; sourceTree = "<group>"; };
+		8F740FB32BA3C0C10072BC13 /* InsigniasPorGanarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsigniasPorGanarController.swift; sourceTree = "<group>"; };
+		8F740FB52BA3C18B0072BC13 /* InsigniaPorGanarCellTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsigniaPorGanarCellTableView.swift; sourceTree = "<group>"; };
+		8F740FB72BA3C4FB0072BC13 /* ModeloInsigniaPorGanar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeloInsigniaPorGanar.swift; sourceTree = "<group>"; };
+		8F740FB92BA3C7A60072BC13 /* InsigniaPorGanarCell2TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsigniaPorGanarCell2TableView.swift; sourceTree = "<group>"; };
 		8F88FD4E2B9F54B90014A207 /* ValidarTexto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidarTexto.swift; sourceTree = "<group>"; };
 		8F88FD502B9F74C00014A207 /* AbbaControl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AbbaControl.entitlements; sourceTree = "<group>"; };
 		8F88FD552B9F77630014A207 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -223,6 +231,7 @@
 				8F00F9792BA1FE070016ABFD /* ModeloAjustes.swift */,
 				8F00F9872BA27D580016ABFD /* ModeloIdioma.swift */,
 				8F740FAE2BA343430072BC13 /* ModeloNotificacion.swift */,
+				8F740FB72BA3C4FB0072BC13 /* ModeloInsigniaPorGanar.swift */,
 			);
 			path = ajustes;
 			sourceTree = "<group>";
@@ -364,6 +373,7 @@
 		8F154C432BA0ED1900BBCE96 /* ajustes */ = {
 			isa = PBXGroup;
 			children = (
+				8F740FB22BA3C0A30072BC13 /* insignias */,
 				8F740FA92BA33C530072BC13 /* notificacion */,
 				8F00F9892BA28BCF0016ABFD /* perfil */,
 				8F00F9842BA270270016ABFD /* idioma */,
@@ -384,6 +394,16 @@
 				8F740FB02BA367BF0072BC13 /* NotificacionesCell2TableView.swift */,
 			);
 			path = notificacion;
+			sourceTree = "<group>";
+		};
+		8F740FB22BA3C0A30072BC13 /* insignias */ = {
+			isa = PBXGroup;
+			children = (
+				8F740FB32BA3C0C10072BC13 /* InsigniasPorGanarController.swift */,
+				8F740FB52BA3C18B0072BC13 /* InsigniaPorGanarCellTableView.swift */,
+				8F740FB92BA3C7A60072BC13 /* InsigniaPorGanarCell2TableView.swift */,
+			);
+			path = insignias;
 			sourceTree = "<group>";
 		};
 		8F88FD562B9F77630014A207 /* OneSignalNotificationServiceExtension */ = {
@@ -739,6 +759,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F740FB12BA367BF0072BC13 /* NotificacionesCell2TableView.swift in Sources */,
+				8F740FB62BA3C18B0072BC13 /* InsigniaPorGanarCellTableView.swift in Sources */,
 				8F740FAF2BA343430072BC13 /* ModeloNotificacion.swift in Sources */,
 				8F0864042B9D547600A012E2 /* ViewController.swift in Sources */,
 				8F154C4B2BA149FB00BBCE96 /* AjusteCell3TableView.swift in Sources */,
@@ -753,11 +774,14 @@
 				8F154C472BA1438700BBCE96 /* AjusteCell1TableView.swift in Sources */,
 				8FD2DC412B9E809A00D8C964 /* ModeloDepartamentos.swift in Sources */,
 				8F88FD4F2B9F54B90014A207 /* ValidarTexto.swift in Sources */,
+				8F740FBA2BA3C7A60072BC13 /* InsigniaPorGanarCell2TableView.swift in Sources */,
 				8F00F97A2BA1FE080016ABFD /* ModeloAjustes.swift in Sources */,
 				8F154C402BA09B7B00BBCE96 /* TabBarPrincipalController.swift in Sources */,
+				8F740FB82BA3C4FB0072BC13 /* ModeloInsigniaPorGanar.swift in Sources */,
 				8F0864002B9D547600A012E2 /* AppDelegate.swift in Sources */,
 				8F00F98B2BA28E6D0016ABFD /* MiPerfilController.swift in Sources */,
 				8FD2DC3D2B9E75AA00D8C964 /* ModeloGenero.swift in Sources */,
+				8F740FB42BA3C0C10072BC13 /* InsigniasPorGanarController.swift in Sources */,
 				8F88FD6C2B9F9AC10014A207 /* LoginRegisterController.swift in Sources */,
 				8FD2DC3F2B9E7ABA00D8C964 /* ModeloPais.swift in Sources */,
 				8F00F9802BA2216F0016ABFD /* InicioController.swift in Sources */,

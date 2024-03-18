@@ -200,7 +200,7 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
                 let union = baseUrlImagen+selectedItem.getImagen()
           
                     cell.imgNoti.sd_setImage(with: URL(string: "\(union)"), placeholderImage: UIImage(named: "fotodefecto"))
-                    cell.imgNoti.isHidden = false
+                   
                 
             }else{
                 

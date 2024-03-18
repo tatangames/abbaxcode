@@ -42,3 +42,5 @@ let apiInfoMiPerfil = baseUrl+"app/solicitar/informacion/perfil"
 let apiActualizarPerfil = baseUrl+"app/actualizar/perfil/usuario"
 // listado de notificaciones usuario
 let apiListadoNotificaciones = baseUrl+"app/notificaciones/listado"
+// listado insignias por ganar
+let apiListadoInsigniaPorGanar = baseUrl+"app/listado/insignias/faltantes"

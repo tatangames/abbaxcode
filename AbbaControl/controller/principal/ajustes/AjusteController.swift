@@ -288,7 +288,8 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
             vistaCambiarContrasena()
         }
         else if(tipo == 5){
-            
+            // insignias por ganar
+            vistaInsigniaPorGanar()
         }
         else if(tipo == 6){
             
@@ -422,6 +423,13 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
     
     func vistaNotificaciones(){
         let vista : NotificacionesController = UIStoryboard(name: "Main2", bundle: nil).instantiateViewController(withIdentifier: "NotificacionesController") as! NotificacionesController
+                
+        self.present(vista, animated: true, completion: nil)
+    }
+    
+    
+    func vistaInsigniaPorGanar(){
+        let vista : InsigniasPorGanarController = UIStoryboard(name: "Main2", bundle: nil).instantiateViewController(withIdentifier: "InsigniasPorGanarController") as! InsigniasPorGanarController
                 
         self.present(vista, animated: true, completion: nil)
     }
