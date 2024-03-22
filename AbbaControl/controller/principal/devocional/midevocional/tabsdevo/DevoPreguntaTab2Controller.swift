@@ -1,13 +1,13 @@
 //
-//  ModalBibliaHtmlController.swift
+//  DevoPreguntaTab2Controller.swift
 //  AbbaControl
 //
-//  Created by Jonathan  Moran on 18/3/24.
+//  Created by Jonathan  Moran on 21/3/24.
 //
 
 import UIKit
 
-class ModalBibliaHtmlController: UIViewController {
+class DevoPreguntaTab2Controller: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
