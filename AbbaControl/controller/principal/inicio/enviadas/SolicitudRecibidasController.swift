@@ -1,13 +1,13 @@
 //
-//  InicioTab2Controller.swift
+//  SolicitudRecibidasController.swift
 //  AbbaControl
 //
-//  Created by Jonathan  Moran on 21/3/24.
+//  Created by Jonathan  Moran on 23/3/24.
 //
 
 import UIKit
 
-class InicioTab2Controller: UIViewController {
+class SolicitudRecibidasController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
