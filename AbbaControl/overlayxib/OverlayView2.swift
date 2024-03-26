@@ -7,20 +7,32 @@
 
 import UIKit
 
+protocol OverlayViewDelegatePicker2: AnyObject {
+    func didTapPicker2(id: Int)
+}
 
 
-
-class OverlayView2: UIViewController {
+class OverlayView2: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate  {
   
+    weak var delegate3: OverlayViewDelegatePicker2?
+  
+    @IBOutlet weak var txtVersiones: UILabel!
+    @IBOutlet weak var pickerVersiones: UIPickerView!
     
-  
-   
+    
+    // Array de elementos
+      var modeloVersiones: [ModeloVersionesClick] = []
+    
+    
     
     
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     
     @IBOutlet weak var slideIdicator: UIView!
+    
+    
+ 
     
     
     override func viewDidLoad() {
@@ -31,15 +43,11 @@ class OverlayView2: UIViewController {
         slideIdicator.roundCorners(.allCorners, radius: 10)
         
     
+        pickerVersiones.dataSource = self
+        pickerVersiones.delegate = self
         
-             
-    
         
-        
-        // SI TIENE POSICION CAMBIARA SINO SE COLOCARA EN POSICION 0 DEFECTO
-        let posPicker = UserDefaults.standard.getValueTipoLetraTexto() ?? 0
-            
-       
+        txtVersiones.text = TextoIdiomaController.localizedString(forKey: "versiones")
     }
     
 
@@ -75,7 +83,33 @@ class OverlayView2: UIViewController {
     }
     
     
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return modeloVersiones.count
+    }
+
+    // MARK: - UIPickerViewDelegate
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return modeloVersiones[row].titulo
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let selectedItem = modeloVersiones[row]
+              
+        cambiarLetra(id: selectedItem.id)
+    }
+  
     
+    
+    
+    func cambiarLetra(id: Int){
+        
+        delegate3?.didTapPicker2(id: id)
+    }
    
     
 }
