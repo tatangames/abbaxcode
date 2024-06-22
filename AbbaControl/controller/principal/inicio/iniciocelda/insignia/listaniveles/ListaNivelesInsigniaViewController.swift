@@ -1,13 +1,13 @@
 //
-//  MiDevocionalCompletadoController.swift
+//  ListaNivelesInsigniaViewController.swift
 //  AbbaControl
 //
-//  Created by Jonathan  Moran on 23/3/24.
+//  Created by Jonathan  Moran on 21/6/24.
 //
 
 import UIKit
 
-class MiDevocionalCompletadoController: UIViewController {
+class ListaNivelesInsigniaViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
