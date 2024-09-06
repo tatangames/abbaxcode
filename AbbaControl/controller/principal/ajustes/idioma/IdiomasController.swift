@@ -9,6 +9,8 @@ import UIKit
 import Toast_Swift
 
 class IdiomasController: UIViewController {
+    
+    // PANTALLA PARA CAMBIAR IDIOMA APLICACION
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var toolbar: UINavigationItem!
@@ -16,12 +18,7 @@ class IdiomasController: UIViewController {
     @IBOutlet weak var txtTituloApp: UILabel!
     @IBOutlet weak var pickerApp: UIPickerView!
     @IBOutlet weak var txtTextoApp: UILabel!
-    
-    
-    @IBOutlet weak var txtTituloDevo: UILabel!
-    @IBOutlet weak var pickerDevo: UIPickerView!
-    @IBOutlet weak var txtTextoDevo: UILabel!
-    
+        
     
 
     var styleAzul = ToastStyle()
@@ -32,11 +29,7 @@ class IdiomasController: UIViewController {
         ModeloIdioma(id: 2, nombre: TextoIdiomaController.localizedString(forKey: "ingles"))
     ]
     
-    let modeloIdiomaDevo: [ModeloIdioma] = [
-    
-        ModeloIdioma(id: 1, nombre: TextoIdiomaController.localizedString(forKey: "espanol")),
-        ModeloIdioma(id: 2, nombre: TextoIdiomaController.localizedString(forKey: "ingles"))
-    ]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,16 +49,9 @@ class IdiomasController: UIViewController {
         
         txtTituloApp.text = TextoIdiomaController.localizedString(forKey: "interfaz_de_la_aplicacion")
         txtTextoApp.text = TextoIdiomaController.localizedString(forKey: "esta_config_afecta_app")
-        
-        
-        txtTituloDevo.text = TextoIdiomaController.localizedString(forKey: "textos_planes_biblia")
-        txtTextoDevo.text = TextoIdiomaController.localizedString(forKey: "esta_config_afecta_planes")
-        
+                
         pickerApp.dataSource = self
         pickerApp.delegate = self
-        
-        pickerDevo.dataSource = self
-        pickerDevo.delegate = self
         
         // mover picker Idioma App
         let idAppActual = UserDefaults.standard.getValueIdiomaApp()
@@ -104,21 +90,17 @@ class IdiomasController: UIViewController {
     
     
     func reiniarApp(){
-        guard let window = UIApplication.shared.windows.first else { return }
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            window.rootViewController = storyboard.instantiateInitialViewController()
+            window.makeKeyAndVisible()
+        }
+        
+        /*guard let window = UIApplication.shared.windows.first else { return }
               let storyboard = UIStoryboard(name: "Main", bundle: nil)
-              window.rootViewController = storyboard.instantiateInitialViewController()
+              window.rootViewController = storyboard.instantiateInitialViewController()*/
     }
-    
-    func actualizarIdiomaDevo(id: Int){
-        
-        UserDefaults.standard.setValueIdiomaTexto(value: id)
-        
-        let mensaje = TextoIdiomaController.localizedString(forKey: "actualizado")
-        
-        self.view.makeToast(mensaje, duration: 3.0, position: .bottom, style: styleAzul)
-    }
-    
-
 }
 
 extension IdiomasController: UIPickerViewDataSource, UIPickerViewDelegate {
@@ -131,9 +113,6 @@ extension IdiomasController: UIPickerViewDataSource, UIPickerViewDelegate {
         
         if pickerView == pickerApp {
             return modeloIdiomaApp.count
-        }
-        else if pickerView == pickerDevo {
-            return modeloIdiomaDevo.count
         }
       
         return 0
@@ -149,11 +128,6 @@ extension IdiomasController: UIPickerViewDataSource, UIPickerViewDelegate {
             label.text = modeloIdiomaApp[row].nombre
             containerView.addSubview(label)
             
-        } else if pickerView == pickerDevo {
-            
-            let label = UILabel(frame: CGRect(x: 40, y: 0, width: pickerView.frame.width - 40, height: 30))
-            label.text = modeloIdiomaDevo[row].nombre
-            containerView.addSubview(label)
         }
        
         return containerView
@@ -166,14 +140,9 @@ extension IdiomasController: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == pickerApp {
             let selectedApp = modeloIdiomaApp[row]
-            cambioIdiomaApp(id: selectedApp.getId())
             
-        } else if pickerView == pickerDevo {
-            let selectedDevo = modeloIdiomaDevo[row]
-            actualizarIdiomaDevo(id: selectedDevo.getId())
+            cambioIdiomaApp(id: selectedApp.getId())
         }
     }
-    
-    
     
 }

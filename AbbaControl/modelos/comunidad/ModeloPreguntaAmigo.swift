@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+class ModeloPreguntaAmigo{
+    
+    var titulo: String
+    var respuesta: String
+    
+    
+    init(titulo: String, respuesta: String) {
+        self.titulo = titulo
+        self.respuesta = respuesta
+    }
+}

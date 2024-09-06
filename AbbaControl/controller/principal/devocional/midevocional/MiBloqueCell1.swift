@@ -10,10 +10,9 @@ import UIKit
 class MiBloqueCell1: UICollectionViewCell {
     
     
-    @IBOutlet weak var vista: UIView!
     @IBOutlet weak var texto: UILabel!
-    @IBOutlet weak var btnBoton: UIButton!
+    @IBOutlet weak var texto2: UILabel!    
     
-    
+    @IBOutlet weak var vistaFondo: UIView! // FONDO
     
 }

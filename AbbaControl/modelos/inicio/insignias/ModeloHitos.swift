@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+class ModeloHitos{
+    
+    var tipo: Int
+    var nivel: Int
+    var fechaFormat: String
+    
+    init(tipo: Int, nivel: Int, fechaFormat: String) {
+        self.tipo = tipo
+        self.nivel = nivel
+        self.fechaFormat = fechaFormat
+    }
+    
+}

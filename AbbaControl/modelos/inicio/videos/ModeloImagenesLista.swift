@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+class ModeloImagenesLista{
+    
+    var imagen: String
+    
+    init(imagen: String) {
+        self.imagen = imagen
+    }
+    
+}

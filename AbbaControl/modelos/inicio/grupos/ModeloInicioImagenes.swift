@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+class ModeloInicioImagenes{
+    
+    var descripcion: String
+    var imagen: String
+    
+    init(descripcion: String, imagen: String) {
+        self.descripcion = descripcion
+        self.imagen = imagen
+    }
+    
+}

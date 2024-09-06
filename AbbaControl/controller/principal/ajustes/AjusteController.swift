@@ -17,15 +17,21 @@ protocol protocolPerfilController {
   func pasarDatosProtocol(data: Bool)
 }
 
+protocol ThemeChangeDelegate: AnyObject {
+    func didChangeTheme(to theme: Bool)
+}
+
+
 class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSource, protocolPerfilController {
     
-    func pasarDatosProtocol(data: Bool) {
-        if(data){
-            tableView.isHidden = true
-            apiSolicitarDatos()
-        }
-    }
     
+    // PANTALLA AJUSTES LISTADOS
+    
+    
+    weak var bibliaControllerDelegate: ThemeChangeDelegate?
+    weak var devocionalControllerDelegate: ThemeChangeDelegate?
+    weak var inicioControllerDelegate: ThemeChangeDelegate?
+
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -64,6 +70,26 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
         tableView.separatorStyle = .none
               
         apiSolicitarDatos()
+        
+        if let tabBarController = tabBarController {
+               tabBarController.tabBar.barTintColor = UIColor.white // Color deseado
+        }
+    }
+    
+    
+    func cambiarTema(_ tema: Bool) {
+        // Lógica para cambiar el tema aquí
+        bibliaControllerDelegate?.didChangeTheme(to: tema)
+        devocionalControllerDelegate?.didChangeTheme(to: tema)
+        inicioControllerDelegate?.didChangeTheme(to: tema)
+    }
+    
+    
+    func pasarDatosProtocol(data: Bool) {
+        if(data){
+            tableView.isHidden = true
+            apiSolicitarDatos()
+        }
     }
     
     
@@ -114,7 +140,6 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
                     case .failure(_):
                         MBProgressHUD.hide(for: self.view, animated: true)
                         self.mensajeSinConexion()
-                        //observer.onError(error)
                     }
                 }
             
@@ -122,23 +147,22 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
                 request.cancel()
             }
         }
-        .retry() // Retry indefinitely
+        .retry()
         .subscribe(onNext: {
-            // Hacer algo cuando la solicitud tenga éxito
+         
             
         }, onError: { error in
-            // Manejar el error de la solicitud
+       
             MBProgressHUD.hide(for: self.view, animated: true)
         })
         .disposed(by: disposeBag)
     }
     
-    func recargarTableView(){
-        tableView.reloadData()
-    }
+    
     
     func mensajeSinConexion(){
-        mensajeToastAzul(mensaje: "Sin conexion")
+        let msg = TextoIdiomaController.localizedString(forKey: "sin_conexion_a_internet")
+        mensajeToastAzul(mensaje: msg)
         MBProgressHUD.hide(for: self.view, animated: true)
     }
     
@@ -148,27 +172,23 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
     }
   
     
-  
     
     func completar(){
         
         if(unaVezCrearModelo){
             items = [
                 ModeloAjustes(tipo: TIPOTITULO, id: 1, nombre: TextoIdiomaController.localizedString(forKey: "ajustes"), nombreImagen: ""),
-                
                 ModeloAjustes(tipo: TIPOPERFIL, id: 2, nombre: "", nombreImagen: "circulo"),
-                
                 
                 ModeloAjustes(tipo: TIPOOPCIONES, id: 3, nombre: TextoIdiomaController.localizedString(forKey: "notificaciones"), nombreImagen: "ic_notificacion"),
                 ModeloAjustes(tipo: TIPOOPCIONES, id: 4, nombre: TextoIdiomaController.localizedString(forKey: "contrasena"), nombreImagen: "ic_password"),
                 ModeloAjustes(tipo: TIPOOPCIONES, id: 5, nombre: TextoIdiomaController.localizedString(forKey: "insignias_por_ganar"), nombreImagen: "ic_insignia"),
-                ModeloAjustes(tipo: TIPOOPCIONES, id: 6, nombre: TextoIdiomaController.localizedString(forKey: "planes_comunidad"), nombreImagen: "ic_libro"),
                 
                 ModeloAjustes(tipo: TIPOOPCIONES, id: 7, nombre: TextoIdiomaController.localizedString(forKey: "idioma"), nombreImagen: "ic_mundo"),
                 
                 ModeloAjustes(tipo: TIPOOPCIONES, id: 8, nombre: TextoIdiomaController.localizedString(forKey: "temas"), nombreImagen: "ic_tema"),
-                
-                ModeloAjustes(tipo: TIPOOPCIONES, id: 9, nombre: TextoIdiomaController.localizedString(forKey: "cerrar_sesion"), nombreImagen: "ic_cerrar"),
+             
+                ModeloAjustes(tipo: TIPOOPCIONES, id: 10, nombre: TextoIdiomaController.localizedString(forKey: "cerrar_sesion"), nombreImagen: "ic_cerrar"),
             ]
         }
         
@@ -176,10 +196,6 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
         tableView.reloadData()
         tableView.isHidden = false
     }
-    
-    
-    
-    
     
     
 
@@ -191,7 +207,6 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                  
         let item = items[indexPath.row]
-        
         
         if item.tipo == TIPOTITULO {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell1", for: indexPath) as! AjusteCell1TableView
@@ -210,7 +225,6 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
             cell.imgPerfil.image = UIImage(named: item.nombreImagen)?.withRenderingMode(.alwaysTemplate)
             cell.selectionStyle = .none
             
-            // letra dentro del imageview
             
             if let existingLabel = cell.imgPerfil.viewWithTag(100) as? UILabel {
                 // Si existe, la eliminamos
@@ -238,7 +252,6 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
             // Establecer restricciones para el label
             label.centerXAnchor.constraint(equalTo: cell.imgPerfil.centerXAnchor).isActive = true
             label.centerYAnchor.constraint(equalTo: cell.imgPerfil.centerYAnchor).isActive = true
-            
             
             return cell
         }
@@ -291,9 +304,7 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
             // insignias por ganar
             vistaInsigniaPorGanar()
         }
-        else if(tipo == 6){
-            
-        }
+      
         else if(tipo == 7){
             vistaIdiomas()
         }
@@ -301,11 +312,28 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
             preguntaTema()
         }
         else if(tipo == 9){
+            preguntaEliminarCuenta()
+        }
+        else if(tipo == 10){
             // cerrar sesion
             preguntaSalir()
         }
     }
     
+    
+    func preguntaEliminarCuenta(){
+        let titulo = TextoIdiomaController.localizedString(forKey: "eliminar_cuenta")
+        let tituloMensaje = TextoIdiomaController.localizedString(forKey: "eliminar_cuenta_mensaje")
+        
+        let alert = UIAlertController(title: titulo, message: tituloMensaje, preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "ok", style: UIAlertAction.Style.default, handler: {(action) in
+            alert.dismiss(animated: true, completion: nil)
+            
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
     
     
     func preguntaTema(){
@@ -324,18 +352,20 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
         
         alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.default, handler: {(action) in
             alert.dismiss(animated: true, completion: nil)
+            
+            
         }))
         
         alert.addAction(UIAlertAction(title: txtSi, style: UIAlertAction.Style.default, handler: {(action) in
             alert.dismiss(animated: true, completion: nil)
             
-            self.cambiarTema()
+            self.cambiarTemaApp()
         }))
         
         self.present(alert, animated: true, completion: nil)
     }
  
-    func cambiarTema(){
+    func cambiarTemaApp(){
         
         var valorTema = false
         
@@ -355,12 +385,12 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
         }else{
             tema = false
         }
-        
-       
-        
+                
         // actualizar de nuevo la tabla
         tableView.isHidden = true
         apiSolicitarDatos()
+        
+        cambiarTema(tema)
     }
     
     
@@ -433,5 +463,12 @@ class AjusteController: UIViewController,UITableViewDelegate, UITableViewDataSou
                 
         self.present(vista, animated: true, completion: nil)
     }
+    
+    func vistaPlanesOcultar(){
+        let vista : PlanesOcultarController = UIStoryboard(name: "Main2", bundle: nil).instantiateViewController(withIdentifier: "PlanesOcultarController") as! PlanesOcultarController
+                
+        self.present(vista, animated: true, completion: nil)
+    }
 
+   
 }

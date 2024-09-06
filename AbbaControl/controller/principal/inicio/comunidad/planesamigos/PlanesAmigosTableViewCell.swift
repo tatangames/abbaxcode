@@ -9,6 +9,12 @@ import UIKit
 
 class PlanesAmigosTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var txtNombre: UILabel!
+    @IBOutlet weak var imgFoto: UIImageView!
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

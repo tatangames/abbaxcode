@@ -41,8 +41,59 @@ class NuevaContrasenaController: UIViewController, UIScrollViewDelegate, UITextF
         
         toolbar.title = TextoIdiomaController.localizedString(forKey: "nueva_contrasena")
         
+        configurarInputPassToggle()
+        
         configuracionInicial()
     }
+    
+    
+    
+    var iconClick = true
+    let imageIcon = UIImageView()
+    
+    func configurarInputPassToggle(){
+        
+        // CONFIGURAR INPUT PASSWORD
+        imageIcon.image = UIImage(named: "closeeye")
+        
+        let contentView = UIView()
+        contentView.addSubview(imageIcon)
+        
+        contentView.frame = CGRect(x: 0, y: 0, width: UIImage(named: "closeeye")!.size.width,
+                                   height: UIImage(named: "closeeye")!.size.height)
+        
+        imageIcon.frame = CGRect(x: -10, y: 0, width: UIImage(named: "closeeye")!.size.width,
+                                   height: UIImage(named: "closeeye")!.size.height)
+        
+        edtContrasena.rightView = contentView
+        edtContrasena.rightViewMode = .always
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        imageIcon.isUserInteractionEnabled = true
+        imageIcon.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    
+    @objc func imageTapped(tapGestureRecognizer:UITapGestureRecognizer){
+        
+        let tappedImage = tapGestureRecognizer.view as! UIImageView
+        
+        if(iconClick){
+            iconClick = false
+            tappedImage.image = UIImage(named: "openeye")
+            edtContrasena.isSecureTextEntry = false
+        }else{
+            iconClick = true
+            tappedImage.image = UIImage(named: "closeeye")
+            edtContrasena.isSecureTextEntry = true
+        }
+        
+    }
+    
+    
+    
+    
+    
     
     func configuracionInicial(){
         

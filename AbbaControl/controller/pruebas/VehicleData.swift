@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct VehicleData{
+  //  var opened: Bool
+    let sectionType: String
+    let productName: [String]
+    
+}

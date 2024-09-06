@@ -9,6 +9,10 @@ import UIKit
 
 class MiTituloCell2ViewCell: UITableViewCell {
 
+    @IBOutlet weak var txtTitulo: UILabel!
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,5 +23,7 @@ class MiTituloCell2ViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    
 
 }

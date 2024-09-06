@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+class ModeloListaNivel{
+    
+    var nivel: Int
+    var texto: String
+    
+    init(nivel: Int, texto: String) {
+        self.nivel = nivel
+        self.texto = texto
+    }
+    
+}

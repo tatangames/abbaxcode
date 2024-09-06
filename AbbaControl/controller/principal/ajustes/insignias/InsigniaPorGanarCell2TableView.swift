@@ -10,8 +10,8 @@ import UIKit
 class InsigniaPorGanarCell2TableView: UITableViewCell {
 
     
-    @IBOutlet weak var txtNoHay: UILabel!
     
+    @IBOutlet weak var txtSinInsignias: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

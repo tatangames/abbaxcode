@@ -10,35 +10,21 @@ import UIKit
 class EjemploController: UIViewController {
 
     
+    @IBOutlet weak var texto: UILabel!
     @IBOutlet weak var imgen: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        overrideUserInterfaceStyle = .dark
+        if let font = UIFont(name: "Chango-Regular", size: 17.0) {
+                   texto.font = font
+            print("texto cargado")
+               } else {
+                   print("No se pudo cargar la fuente Chango-Regular")
+               }
 
         
-        
-        // Crear un UILabel
-        let label = UILabel()
-        label.text = "J" // Establece el texto que deseas mostrar
-        label.textColor = UIColor.white // Establece el color de texto que desees
-        label.textAlignment = .center // Alinea el texto al centro del label
-        label.translatesAutoresizingMaskIntoConstraints = false // Desactiva la creación automática de restricciones
-
-        // Agregar el label a la imageView
-        imgen.addSubview(label)
-
-        // Establecer restricciones para el label
-        label.centerXAnchor.constraint(equalTo: imgen.centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: imgen.centerYAnchor).isActive = true
-        
-        
-
-        imgen .image = UIImage(named: "circulo")?.withRenderingMode(.alwaysTemplate)
-        
-        
-        imgen.tintColor = UIColor.white
+      
     }
     
 

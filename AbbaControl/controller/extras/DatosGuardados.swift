@@ -69,7 +69,7 @@ extension UserDefaults{
     
     
     //******* IDIOMA DE LA APLICACION *********
-    
+            
     
     func setValueIdiomaApp(value: Int?){
         if(value != nil){
@@ -89,24 +89,7 @@ extension UserDefaults{
     
     
     
-    //******* IDIOMA PARA VER TEXTO TRAIDO DEL SERVIDOR *********
-    
-    
-    func setValueIdiomaTexto(value: Int?){
-        if(value != nil){
-            UserDefaults.standard.set(value, forKey: "IDIOMATEXTO")
-        }else{
-            UserDefaults.standard.removeObject(forKey: "IDIOMATEXTO")
-        }
-        
-        UserDefaults.standard.synchronize()
-    }
-    
-    
-    func getValueIdiomaTexto() -> Int? {
-        return UserDefaults.standard.value(forKey: "IDIOMATEXTO") as? Int
-    }
-    
+  
     
     //******* TIPO DE LERA PARA LEER DEVOCIOANLES *********
     

@@ -11,7 +11,7 @@ import SwiftyJSON
 import Alamofire
 import RxSwift
 import Toast_Swift
-import OneSignalFramework
+
 
 class LoginController: UIViewController,UIScrollViewDelegate, UITextFieldDelegate {
 
@@ -27,12 +27,17 @@ class LoginController: UIViewController,UIScrollViewDelegate, UITextFieldDelegat
     @IBOutlet weak var btnLogin: UIButton!
     @IBOutlet weak var btnOlvidePass: UIButton!
     
+      
     
     var styleAzul = ToastStyle()
     let disposeBag = DisposeBag()
     
     var tema = false
-    var idFirebase = ""
+    
+    
+  
+    
+    
     
     
     override func viewDidLoad() {
@@ -49,8 +54,57 @@ class LoginController: UIViewController,UIScrollViewDelegate, UITextFieldDelegat
             overrideUserInterfaceStyle = .light
         }
         
+        configurarInputPassToggle()
+        
         configuracionInicial()
     }
+    
+    var iconClick = true
+    let imageIcon = UIImageView()
+    
+    func configurarInputPassToggle(){
+        
+        // CONFIGURAR INPUT PASSWORD
+        imageIcon.image = UIImage(named: "closeeye")
+        
+        let contentView = UIView()
+        contentView.addSubview(imageIcon)
+        
+        contentView.frame = CGRect(x: 0, y: 0, width: UIImage(named: "closeeye")!.size.width,
+                                   height: UIImage(named: "closeeye")!.size.height)
+        
+        imageIcon.frame = CGRect(x: -10, y: 0, width: UIImage(named: "closeeye")!.size.width,
+                                   height: UIImage(named: "closeeye")!.size.height)
+        
+        edtPassword.rightView = contentView
+        edtPassword.rightViewMode = .always
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        imageIcon.isUserInteractionEnabled = true
+        imageIcon.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    
+    @objc func imageTapped(tapGestureRecognizer:UITapGestureRecognizer){
+        
+        let tappedImage = tapGestureRecognizer.view as! UIImageView
+        
+        if(iconClick){
+            iconClick = false
+            tappedImage.image = UIImage(named: "openeye")
+            edtPassword.isSecureTextEntry = false
+        }else{
+            iconClick = true
+            tappedImage.image = UIImage(named: "closeeye")
+            edtPassword.isSecureTextEntry = true
+        }
+        
+    }
+    
+    
+    
+    
+    
     
     func configuracionInicial(){
         
@@ -72,6 +126,18 @@ class LoginController: UIViewController,UIScrollViewDelegate, UITextFieldDelegat
         edtPassword.clipsToBounds = true
         edtPassword.delegate = self
         edtPassword.setPadding(10)
+        
+        
+        if(tema){
+            
+        }else{
+            if let myCustomColor = UIColor(named: "grisAAA") {
+                edtCorreo.backgroundColor = myCustomColor
+                edtPassword.backgroundColor = myCustomColor
+            }
+        }
+        
+        
         
         btnLogin.layer.cornerRadius = 18
         btnLogin.clipsToBounds = true
@@ -112,14 +178,8 @@ class LoginController: UIViewController,UIScrollViewDelegate, UITextFieldDelegat
                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), // tamaño letra
                NSAttributedString.Key.foregroundColor: UIColor.white,
             ])
-            
-            let btnContinuarAtributoPress = NSAttributedString(string: textContinuar, attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), // tamaño letra
-                NSAttributedString.Key.foregroundColor: UIColor.gray,
-            ])
-    
+          
                 btnLogin.setAttributedTitle(btnContinuarAtributo, for: .normal)
-                btnLogin.setAttributedTitle(btnContinuarAtributoPress, for: .highlighted)
             
             
             // BOTON OLVIDE PASS
@@ -153,10 +213,6 @@ class LoginController: UIViewController,UIScrollViewDelegate, UITextFieldDelegat
         
         btnOlvidePass.setAttributedTitle(btnPassAtributoPress, for: .highlighted)
         
-        
-        // IDENTIFICADOR ONE SIGNAL
-        let id: String = OneSignal.User.pushSubscription.id ?? ""
-        idFirebase = id
     }
     
     
@@ -198,7 +254,6 @@ class LoginController: UIViewController,UIScrollViewDelegate, UITextFieldDelegat
         let parameters: [String: Any] = [
             "correo": edtCorreo.text ?? "",
             "password": edtPassword.text ?? "",
-            "idonesignal": idFirebase,
         ]
         
         Observable<Void>.create { observer in

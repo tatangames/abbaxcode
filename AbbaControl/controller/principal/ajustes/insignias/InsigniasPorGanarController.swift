@@ -57,7 +57,7 @@ class InsigniasPorGanarController: UIViewController, UITableViewDelegate, UITabl
         
         let iduser = UserDefaults.standard.getValueIdUsuario()
         let token = UserDefaults.standard.getValueTokenUsuario()
-        let idiomaPlan = UserDefaults.standard.getValueIdiomaTexto()
+        let idiomaPlan = UserDefaults.standard.getValueIdiomaApp()
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token ?? "")"
@@ -142,7 +142,8 @@ class InsigniasPorGanarController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func mensajeSinConexion(){
-        mensajeToastAzul(mensaje: "Sin conexion")
+        let msg = TextoIdiomaController.localizedString(forKey: "sin_conexion_a_internet")
+        mensajeToastAzul(mensaje: msg)
         MBProgressHUD.hide(for: self.view, animated: true)
     }
     
@@ -191,8 +192,8 @@ class InsigniasPorGanarController: UIViewController, UITableViewDelegate, UITabl
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath) as! InsigniaPorGanarCell2TableView
             
-            cell.txtNoHay.numberOfLines = 0
-            cell.txtNoHay.text = TextoIdiomaController.localizedString(forKey: "no_hay_insignias_disponibles")
+            cell.txtSinInsignias.numberOfLines = 0
+            cell.txtSinInsignias.text = TextoIdiomaController.localizedString(forKey: "no_hay_insignias_disponibles")
                         
             cell.selectionStyle = .none
             

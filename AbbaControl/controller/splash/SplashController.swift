@@ -8,6 +8,10 @@
 import UIKit
 
 class SplashController: UIViewController {
+    
+    // PANTALLA SPLASH DE INICIO
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,25 +21,21 @@ class SplashController: UIViewController {
         if(UserDefaults.standard.getValueIdiomaTelefono() == nil){
                        
             let deviceLanguage = Locale.preferredLanguages.first
-         
-            
+                     
             if let deviceLanguage = deviceLanguage{
                 
                 if deviceLanguage.hasPrefix("es")  {
                    // espanol
                     UserDefaults.standard.setValueIdiomaApp(value: 1)
-                    UserDefaults.standard.setValueIdiomaTexto(value: 1)
                 }
                 else{
                   // ingles
                     UserDefaults.standard.setValueIdiomaApp(value: 2)
-                    UserDefaults.standard.setValueIdiomaTexto(value: 2)
                 }
             }else{
                 
                 // espanol defecto
                 UserDefaults.standard.setValueIdiomaApp(value: 1)
-                UserDefaults.standard.setValueIdiomaTexto(value: 1)
             }
             
             UserDefaults.standard.setValueIdiomaTelefono(value: 1)

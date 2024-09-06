@@ -9,6 +9,22 @@ import UIKit
 
 class PreguntasCell4: UITableViewCell {
 
+    // CONTIENE BOTON GUARDAR Y BOTON COMPARTIR
+    
+    @IBOutlet weak var btnCompartir: UIButton!
+    @IBOutlet weak var btnGuardar: UIButton!
+    
+    
+    // Agrega acciones para los botones
+      @IBAction func buttonCompartirTapped(_ sender: UIButton) {
+         
+      }
+
+      @IBAction func buttonGuardarTapped(_ sender: UIButton) {
+         
+      }
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -6,3 +6,19 @@
 //
 
 import Foundation
+class ModeloVersionesClick{
+    
+    
+    var id: Int
+    var titulo: String
+   
+   
+    init(id: Int, titulo: String) {
+        self.id = id
+        self.titulo = titulo
+    }
+    
+    
+    
+}
+

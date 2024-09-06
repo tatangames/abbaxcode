@@ -24,6 +24,9 @@ class NuevaPassController: UIViewController, UIScrollViewDelegate, UITextFieldDe
     let disposeBag = DisposeBag()
     var tema = false
     
+    var iconClick = true
+    let imageIcon = UIImageView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,8 +41,52 @@ class NuevaPassController: UIViewController, UIScrollViewDelegate, UITextFieldDe
             overrideUserInterfaceStyle = .light
         }
         
+        configurarInputPassToggle()
+        
         configuracionInicial()
     }
+    
+    
+    func configurarInputPassToggle(){
+        
+        // CONFIGURAR INPUT PASSWORD
+        imageIcon.image = UIImage(named: "closeeye")
+        
+        let contentView = UIView()
+        contentView.addSubview(imageIcon)
+        
+        contentView.frame = CGRect(x: 0, y: 0, width: UIImage(named: "closeeye")!.size.width,
+                                   height: UIImage(named: "closeeye")!.size.height)
+        
+        imageIcon.frame = CGRect(x: -10, y: 0, width: UIImage(named: "closeeye")!.size.width,
+                                   height: UIImage(named: "closeeye")!.size.height)
+        
+        edtPassword.rightView = contentView
+        edtPassword.rightViewMode = .always
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        imageIcon.isUserInteractionEnabled = true
+        imageIcon.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    
+    @objc func imageTapped(tapGestureRecognizer:UITapGestureRecognizer){
+        
+        let tappedImage = tapGestureRecognizer.view as! UIImageView
+        
+        if(iconClick){
+            iconClick = false
+            tappedImage.image = UIImage(named: "openeye")
+            edtPassword.isSecureTextEntry = false
+        }else{
+            iconClick = true
+            tappedImage.image = UIImage(named: "closeeye")
+            edtPassword.isSecureTextEntry = true
+        }
+    }
+    
+    
+    
     
     
     func configuracionInicial(){

@@ -5,4 +5,13 @@
 //  Created by Jonathan  Moran on 26/3/24.
 //
 
-import Foundation
+import UIKit
+
+class ImagenesCell1: UICollectionViewCell {
+    
+    
+    @IBOutlet weak var imgFoto: UIImageView!
+    
+    
+    
+}

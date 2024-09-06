@@ -25,6 +25,12 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
     
     var items: [ModeloNotificacion] = []
     
+    
+    
+    
+    
+    
+    
     // Paginacion
     var currentPage = 1
     var isLoading = false
@@ -62,7 +68,7 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
         
         let iduser = UserDefaults.standard.getValueIdUsuario()
         let token = UserDefaults.standard.getValueTokenUsuario()
-        let idiomaPlan = UserDefaults.standard.getValueIdiomaTexto()
+        let idiomaPlan = UserDefaults.standard.getValueIdiomaApp()
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token ?? "")"
@@ -72,7 +78,7 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
             "idiomaplan": idiomaPlan ?? 1,
             "iduser": iduser ?? 0,
             "page": currentPage,
-            "limit": 15
+            "limit": 75
         ]
         
         Observable<Void>.create { observer in
@@ -161,7 +167,8 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func mensajeSinConexion(){
-        mensajeToastAzul(mensaje: "Sin conexion")
+        let msg = TextoIdiomaController.localizedString(forKey: "sin_conexion_a_internet")
+        mensajeToastAzul(mensaje: msg)
         MBProgressHUD.hide(for: self.view, animated: true)
     }
     
@@ -177,6 +184,46 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
     func salir(){
         self.dismiss(animated: true, completion: nil)
     }
+    
+    
+    @IBAction func btnBorrar(_ sender: Any) {
+                
+        modalPregunta()
+    }
+    
+    
+    
+    func modalPregunta(){
+        
+        let textoSeleccionar = TextoIdiomaController.localizedString(forKey: "seleccionar_opcion")
+        
+        
+        let textoBorrar = TextoIdiomaController.localizedString(forKey: "borrar")
+        let textoCancelar = TextoIdiomaController.localizedString(forKey: "cancelar")
+       
+        
+        let alertController = UIAlertController(title: textoSeleccionar, message: nil, preferredStyle: .alert)
+               
+        let option1Action = UIAlertAction(title: textoCancelar, style: .default) { (action) in
+                 
+        }
+               
+        let option2Action = UIAlertAction(title: textoBorrar, style: .default) { (action) in
+                   
+            self.apiBorrarNotifi()
+        }
+               
+           alertController.addAction(option1Action)
+           alertController.addAction(option2Action)
+           
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
+   
+    
+    
+    
     
     
     
@@ -258,7 +305,7 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
         
         let iduser = UserDefaults.standard.getValueIdUsuario()
         let token = UserDefaults.standard.getValueTokenUsuario()
-        let idiomaPlan = UserDefaults.standard.getValueIdiomaTexto()
+        let idiomaPlan = UserDefaults.standard.getValueIdiomaApp()
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token ?? "")"
@@ -268,7 +315,7 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
             "idiomaplan": idiomaPlan ?? 1,
             "iduser": iduser ?? 0,
             "page": currentPage,
-            "limit": 15
+            "limit": 75
         ]
         
         Observable<Void>.create { observer in
@@ -347,5 +394,102 @@ class NotificacionesController: UIViewController, UITableViewDelegate, UITableVi
         })
         .disposed(by: disposeBag)
     }
+    
+    
+    
+    
+    
+    func apiBorrarNotifi(){
+        
+        
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
+        let encodeURL = apiBorrarNotificaciones
+        
+        let token = UserDefaults.standard.getValueTokenUsuario()
+        let idiomaPlan = UserDefaults.standard.getValueIdiomaApp()
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(token ?? "")"
+          ]
+        
+        let parameters: [String: Any] = [
+            "idiomaplan": idiomaPlan ?? 1
+        ]
+        
+        Observable<Void>.create { observer in
+            let request = AF.request(encodeURL, method: .post, parameters: parameters, headers: headers)
+                .responseData { response in
+                    switch response.result {
+                    case .success(let data):
+                        
+                        //paginacion
+                        self.isLoading = false
+                        
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                        let json = JSON(data)
+                        
+                        
+                        if let successValue = json["success"].int {
+                            
+                            if(successValue == 1){
+                                     
+                                self.mensajeBorradoNoti()
+                                                          
+                              
+                            }else{
+                                self.mensajeSinConexion()
+                            }
+                            
+                        }else{
+                            self.mensajeSinConexion()
+                        }
+                        
+                    case .failure(_):
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                        self.mensajeSinConexion()
+                       
+                    }
+                }
+            
+            return Disposables.create {
+                request.cancel()
+            }
+        }
+        .retry() // Retry indefinitely
+        .subscribe(onNext: {
+            
+            
+        }, onError: { error in
+            // Manejar el error de la solicitud
+            MBProgressHUD.hide(for: self.view, animated: true)
+        })
+        .disposed(by: disposeBag)
+        
+    }
+    
+    
+    func mensajeBorradoNoti(){
+        
+        let textoCompletado = TextoIdiomaController.localizedString(forKey: "completados")
+                
+        let alertController = UIAlertController(title: textoCompletado, message: nil, preferredStyle: .alert)
+        let option1Action = UIAlertAction(title: "ok", style: .default) { (action) in
+            self.salir()
+        }
+                
+       alertController.addAction(option1Action)
+       
+       present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }

@@ -9,6 +9,13 @@ import UIKit
 
 class PreguntasCell2: UITableViewCell {
 
+    
+    // CONTIENE EL TEXTO HTML CON LABEL
+    
+    @IBOutlet weak var txtHtml: UILabel!
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

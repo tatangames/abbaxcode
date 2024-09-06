@@ -9,6 +9,11 @@ import UIKit
 
 class PlanesMeHanAgregadoTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var txtNombre: UILabel!
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -14,6 +14,10 @@ import Toast_Swift
 
 class LoginRegisterController: UIViewController, UIScrollViewDelegate, UITextFieldDelegate {
     
+    
+    // PANTALLA LOGIN Y REGISTER
+    // PANTALLA SERA LIGHT SIEMPRE
+    
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var btnRegistro: UIButton!
@@ -24,6 +28,18 @@ class LoginRegisterController: UIViewController, UIScrollViewDelegate, UITextFie
     
     var styleAzul = ToastStyle()
     let disposeBag = DisposeBag()
+    
+    
+   // @IBOutlet weak var btnInvitado: UIButton!
+    
+    
+    // redireccionar pantalla tab de invitados
+   /* @IBAction func btnInvitado(_ sender: Any) {
+        
+        let vista : TabBarPrincipalInvitadoController = UIStoryboard(name: "Main3", bundle: nil).instantiateViewController(withIdentifier: "TabBarPrincipalInvitadoController") as! TabBarPrincipalInvitadoController
+        
+        self.present(vista, animated: true, completion: nil)
+    }*/
     
     
     override func viewDidLoad() {
@@ -51,16 +67,16 @@ class LoginRegisterController: UIViewController, UIScrollViewDelegate, UITextFie
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureHandler))
         scrollView.addGestureRecognizer(tapGesture)
         
+        let textoInvitado = TextoIdiomaController.localizedString(forKey: "acceder_invitado")
+                 
         btnRegistro.layer.cornerRadius = 18
         btnRegistro.clipsToBounds = true
-          
         
         btnRegistro.backgroundColor = .black
         btnRegistro.setTitleColor(.white, for: .normal)
         btnRegistro.setTitleColor(.gray, for: .highlighted)
         btnRegistro.setTitle(TextoIdiomaController.localizedString(forKey: "registrarse"), for: .normal)
-       
-        
+               
         let textoIngresar = TextoIdiomaController.localizedString(forKey: "ingresar")
         let btnIngresarAtributoHold = NSAttributedString(string: textoIngresar, attributes: [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23),
@@ -76,11 +92,27 @@ class LoginRegisterController: UIViewController, UIScrollViewDelegate, UITextFie
         btnIngresar.setAttributedTitle(btnIngresarAtributoPress, for: .highlighted)
         
         
+        // *** acceder como invitado
+        
+       // btnInvitado.setTitleColor(.black, for: .normal)
+       // btnInvitado.setTitleColor(.black, for: .highlighted)
+               
+        
+       /* let btnInvitadoPress = NSAttributedString(string: textoInvitado, attributes: [
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
+            NSAttributedString.Key.foregroundColor: UIColor.black
+        ])*/
+               
+       // btnInvitado.setAttributedTitle(btnInvitadoPress, for: .normal)
+      //  btnInvitado.setAttributedTitle(btnInvitadoPress, for: .highlighted)
+        
+        
         if let myCustomColor = UIColor(named: "gris757575") {
             txtYaTienesCuenta.textColor = myCustomColor
         }
     }
     
+    // redireccionvar vista registrarse
     @IBAction func btnRegistro(_ sender: Any) {
         
         let vista : RegistroController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegistroController") as! RegistroController
@@ -88,15 +120,15 @@ class LoginRegisterController: UIViewController, UIScrollViewDelegate, UITextFie
         self.present(vista, animated: true, completion: nil)
     }
     
+    // redireccionar vista ingresar a login
     @IBAction func btnIngresar(_ sender: Any) {
         let vista : LoginController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginController") as! LoginController
                 
         self.present(vista, animated: true, completion: nil)
     }
     
-    
-    
 
+    
     @objc func tapGestureHandler() {
         // Cerrar el teclado
         view.endEditing(true)
@@ -109,7 +141,8 @@ class LoginRegisterController: UIViewController, UIScrollViewDelegate, UITextFie
     }
     
     func mensajeSinConexion(){
-        mensajeToastAzul(mensaje: "Sin conexion")
+        let msg = TextoIdiomaController.localizedString(forKey: "sin_conexion_a_internet")
+        mensajeToastAzul(mensaje: msg)
         MBProgressHUD.hide(for: self.view, animated: true)
     }
     

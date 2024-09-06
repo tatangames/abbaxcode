@@ -9,6 +9,17 @@ import UIKit
 
 class PreguntasCell3: UITableViewCell {
 
+    
+    // CONTIENE CARDVIEW
+    @IBOutlet weak var vista: UIView!
+    @IBOutlet weak var txtTitulo: UILabel!
+    @IBOutlet weak var edtTexto: UITextField!
+    @IBOutlet weak var txtRequerido: UILabel!
+    
+ 
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,5 +30,7 @@ class PreguntasCell3: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+
 
 }

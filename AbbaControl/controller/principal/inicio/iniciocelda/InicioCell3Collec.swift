@@ -5,4 +5,14 @@
 //  Created by Jonathan  Moran on 25/3/24.
 //
 
-import Foundation
+import UIKit
+
+class InicioCell3Collec: UICollectionViewCell{
+    
+    @IBOutlet weak var imgImagen: UIImageView!
+    
+    @IBOutlet weak var vista: UIView!
+    
+    
+    
+}

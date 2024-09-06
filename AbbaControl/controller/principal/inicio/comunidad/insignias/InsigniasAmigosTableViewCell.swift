@@ -9,6 +9,12 @@ import UIKit
 
 class InsigniasAmigosTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var txtNivel: UILabel!
+    @IBOutlet weak var txtNombre: UILabel!    
+    @IBOutlet weak var imgFoto: UIImageView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

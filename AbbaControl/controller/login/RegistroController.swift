@@ -17,6 +17,9 @@ import OneSignalFramework
 class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDelegate {
         
     
+    // PANTALLA DE REGISTRO
+    
+    
     @IBOutlet weak var txtPrimerNombre: UILabel!
     @IBOutlet weak var edtPrimerNombre: UITextField!
     
@@ -48,6 +51,26 @@ class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDel
 
     @IBOutlet weak var btnRegistro: UIButton!
     
+    
+    @IBOutlet weak var stackPaisOtros: UIStackView!
+    @IBOutlet weak var stackCiudadOtros: UIStackView!
+    
+    @IBOutlet weak var stackDepartamento: UIStackView!
+    @IBOutlet weak var stackIglesia: UIStackView!
+    
+    
+    @IBOutlet weak var labelPaisOtros: UILabel!
+    @IBOutlet weak var labelCiudadOtros: UILabel!
+    
+    
+    
+    var boolPaisOtros = false
+    
+    @IBOutlet weak var edtPaisOtros: UITextField!
+    @IBOutlet weak var edtCiudadOtros: UITextField!
+    
+    
+    
     var tema = false
     var yaSeleccionoFecha = false
     var fechaNacimiento = ""
@@ -62,6 +85,7 @@ class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDel
     var modeloIglesias: [ModeloIglesia] = []
     
     let disposeBag = DisposeBag()
+    
     
     let generos: [ModeloGenero] = [
         
@@ -86,6 +110,8 @@ class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDel
         ModeloPais(id: 4, nombre: TextoIdiomaController.localizedString(forKey: "nicaragua"), imagen: UIImage(named: "flag_nicaragua")),
         
         ModeloPais(id: 5, nombre: TextoIdiomaController.localizedString(forKey: "mexico"), imagen: UIImage(named: "flag_mexico")),
+        
+        ModeloPais(id: 6, nombre: TextoIdiomaController.localizedString(forKey: "otros"), imagen: UIImage(named: "localizacion")),
     ]
     
     
@@ -190,6 +216,17 @@ class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDel
         edtPassword.delegate = self
         edtPassword.setPadding(10)
         
+        edtPaisOtros.layer.cornerRadius = 10
+        edtPaisOtros.clipsToBounds = true
+        edtPaisOtros.delegate = self
+        edtPaisOtros.setPadding(10)
+        
+        edtCiudadOtros.layer.cornerRadius = 10
+        edtCiudadOtros.clipsToBounds = true
+        edtCiudadOtros.delegate = self
+        edtCiudadOtros.setPadding(10)
+        
+        
         btnRegistro.layer.cornerRadius = 18
         btnRegistro.clipsToBounds = true
           
@@ -207,6 +244,9 @@ class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDel
                 edtApellido.backgroundColor = myCustomColor
                 edtCorreo.backgroundColor = myCustomColor
                 edtPassword.backgroundColor = myCustomColor
+                
+                edtPaisOtros.backgroundColor = myCustomColor
+                edtCiudadOtros.backgroundColor = myCustomColor
             }
         }
         
@@ -214,13 +254,20 @@ class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDel
         // TEXTOS LABEL
         txtPrimerNombre.text = TextoIdiomaController.localizedString(forKey: "primer_nombre")
         txtApellido.text = TextoIdiomaController.localizedString(forKey: "apellido")
-        txtFechaNac.text = TextoIdiomaController.localizedString(forKey: "seleccionar_edad")
+        txtFechaNac.text = TextoIdiomaController.localizedString(forKey: "fecha_de_nacimiento")
         txtGenero.text = TextoIdiomaController.localizedString(forKey: "seleccionar_genero")
         txtPais.text = TextoIdiomaController.localizedString(forKey: "seleccionar_pais")
         txtDepartamento.text = TextoIdiomaController.localizedString(forKey: "departamento")
-        txtIglesia.text = TextoIdiomaController.localizedString(forKey: "iglesia")
+        txtIglesia.text = TextoIdiomaController.localizedString(forKey: "municipio")
         txtCorreo.text = TextoIdiomaController.localizedString(forKey: "correo_electronico")
         txtPassword.text = TextoIdiomaController.localizedString(forKey: "contrasena")
+        
+        
+        labelPaisOtros.text = TextoIdiomaController.localizedString(forKey: "pais")
+        
+        labelCiudadOtros.text = TextoIdiomaController.localizedString(forKey: "ciudad")
+        
+        
                
         btnRegistro.setTitle(TextoIdiomaController.localizedString(forKey: "crear_cuenta"), for: .normal)
         
@@ -297,10 +344,29 @@ class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDel
             return
         }
         
-        if(idIglesia == 0){
-            mensajeToastAzul(mensaje: TextoIdiomaController.localizedString(forKey: "iglesia_es_requerido"))
-            return
+        if(boolPaisOtros){
+            
+            if(ValidarTexto().validarEntradaRequerida(texto: edtPaisOtros.text ?? "") == 1){
+                mensajeToastAzul(mensaje: TextoIdiomaController.localizedString(forKey: "escribir_pais"))
+                return
+            }
+            
+            if(ValidarTexto().validarEntradaRequerida(texto: edtCiudadOtros.text ?? "") == 1){
+                mensajeToastAzul(mensaje: TextoIdiomaController.localizedString(forKey: "escribir_ciudad"))
+                return
+            }
+            
+            // IGLESIA DEFECTO
+            idIglesia = 503
+            
+        }else{
+            if(idIglesia == 0){
+                mensajeToastAzul(mensaje: TextoIdiomaController.localizedString(forKey: "seleccionar_municipio"))
+                return
+            }
         }
+        
+        
         
         // CORREO
         
@@ -365,7 +431,9 @@ class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDel
             "correo": edtCorreo.text ?? "",
             "password": edtPassword.text ?? "",
             "idonesignal": idFirebase,
-            "version": apiVersionApp
+            "version": apiVersionApp,
+            "paisotros": edtPaisOtros.text ?? "",
+            "ciudadotros": edtCiudadOtros.text ?? ""
         ]
         
         Observable<Void>.create { observer in
@@ -436,20 +504,18 @@ class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDel
        
              alert.addAction(UIAlertAction(title: "ok", style: UIAlertAction.Style.default, handler: {(action) in
                  alert.dismiss(animated: true, completion: nil)
-           
              }))
               
         self.present(alert, animated: true, completion: nil)
     }
     
     
+    // redireccionar pantalla para principal tab
     func finalizar(){
         
-       /* let vista : TabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
+        let vista : TabBarPrincipalController = UIStoryboard(name: "Main2", bundle: nil).instantiateViewController(withIdentifier: "TabBarPrincipalController") as! TabBarPrincipalController
         
-        self.present(vista, animated: true, completion: nil)*/
-        
-        print("finalizado")
+        self.present(vista, animated: true, completion: nil)
     }
     
     
@@ -501,7 +567,7 @@ class RegistroController: UIViewController, UITextFieldDelegate, UIScrollViewDel
         view.endEditing(true) // cierre del teclado
     }
     
-    
+    // volver a pantalla login
     @IBAction func bnFlechaAtras(_ sender: Any) {
         
         let vista : LoginRegisterController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginRegisterController") as! LoginRegisterController
@@ -526,7 +592,21 @@ extension RegistroController: UIPickerViewDataSource, UIPickerViewDelegate {
         else if pickerView == pickerPais {
             return pais.count
         } else if pickerView == pickerDepartamento {
+            
+            
+            
             let selectedPais = pais[pickerPais.selectedRow(inComponent: 0)]
+            
+            edtPaisOtros.text = ""
+            edtCiudadOtros.text = ""
+            
+            if(selectedPais.id == 6){
+                bloqueo1()
+            }else{
+                bloque2()
+            }
+            
+            
             switch selectedPais.id {
             case 1: // El Salvador
                 return departamentoElSalvador.count
@@ -538,9 +618,12 @@ extension RegistroController: UIPickerViewDataSource, UIPickerViewDelegate {
                 return departamentoNicaragua.count
             case 5: // Mexico
                 return departamentoMexico.count
+       
             default:
                 return 0
             }
+            
+            
         }
         else if pickerView == pickerIglesia {
             return modeloIglesias.count
@@ -549,6 +632,27 @@ extension RegistroController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     
+    func bloqueo1(){
+        boolPaisOtros = true
+        
+        stackDepartamento.isHidden = true
+        stackIglesia.isHidden = true
+        
+        stackPaisOtros.isHidden = false
+        stackCiudadOtros.isHidden = false
+    }
+    
+    func bloque2(){
+        stackPaisOtros.isHidden = true
+        stackCiudadOtros.isHidden = true
+        
+        stackDepartamento.isHidden = false
+        stackIglesia.isHidden = false
+        
+        
+        boolPaisOtros = false
+        
+    }
     
     
     
@@ -562,6 +666,8 @@ extension RegistroController: UIPickerViewDataSource, UIPickerViewDelegate {
             containerView.addSubview(label)
             
         } else if pickerView == pickerPais {
+            
+            
             if let imagen = pais[row].imagen {
                 let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
                 imageView.image = imagen
@@ -571,12 +677,18 @@ extension RegistroController: UIPickerViewDataSource, UIPickerViewDelegate {
             let label = UILabel(frame: CGRect(x: 40, y: 0, width: pickerView.frame.width - 40, height: 30))
             label.text = pais[row].nombre
             containerView.addSubview(label)
+            
+            
+            
+            
+            
         }
         
         else if pickerView == pickerDepartamento {
             let label = UILabel(frame: CGRect(x: 40, y: 0, width: pickerView.frame.width - 40, height: 30))
             
             let selectedPais = pais[pickerPais.selectedRow(inComponent: 0)]
+           
             switch selectedPais.getId() {
             case 1: // El Salvador
                 label.text = departamentoElSalvador[row].nombre

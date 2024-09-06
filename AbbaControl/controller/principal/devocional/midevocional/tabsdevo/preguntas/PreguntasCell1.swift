@@ -9,6 +9,11 @@ import UIKit
 
 class PreguntasCell1: UITableViewCell {
 
+    // CONTIENE UNA IMAGEN NINO O NINA
+    
+    @IBOutlet weak var imgDevo: UIImageView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

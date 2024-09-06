@@ -14,6 +14,7 @@ target 'AbbaControl' do
   pod 'Toast-Swift' 
   pod 'RxSwift'
   pod 'MBProgressHUD'     
+  pod 'LZViewPager'
 
   target 'AbbaControlTests' do
     inherit! :search_paths

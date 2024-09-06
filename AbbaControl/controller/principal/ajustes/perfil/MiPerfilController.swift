@@ -12,7 +12,8 @@ import Alamofire
 import RxSwift
 import Toast_Swift
 
-class MiPerfilController: UIViewController,  UIScrollViewDelegate, UITextFieldDelegate {
+
+class MiPerfilController: UIViewController,  UIScrollViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
    
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -34,6 +35,12 @@ class MiPerfilController: UIViewController,  UIScrollViewDelegate, UITextFieldDe
     @IBOutlet weak var btnEnviar: UIButton!
     
     @IBOutlet weak var toolbar: UINavigationItem!
+    
+    @IBOutlet weak var imgPerfil: UIImageView!
+    
+    
+    var actualizaraImagen = false
+    
     
     var styleAzul = ToastStyle()
     let disposeBag = DisposeBag()
@@ -70,9 +77,45 @@ class MiPerfilController: UIViewController,  UIScrollViewDelegate, UITextFieldDe
         
         configuracionInicial()
         
+    
+        
+        
+        // Agregar un gesto de tap a la imageView
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+            imgPerfil.isUserInteractionEnabled = true
+            imgPerfil.addGestureRecognizer(tapGesture)
+        
         apiSolicitarDatos()
     }
-        
+
+    
+    @objc func imageTapped(sender: UITapGestureRecognizer) {
+           if let imageView = sender.view as? UIImageView {
+               // Aquí puedes realizar las acciones que desees cuando se toque la imagen
+               
+               let imagePicker = UIImagePickerController()
+                      imagePicker.delegate = self
+                      imagePicker.sourceType = .photoLibrary
+                      present(imagePicker, animated: true, completion: nil)
+           }
+       }
+    
+    
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+           if let pickedImage = info[.originalImage] as? UIImage {
+               imgPerfil.image = pickedImage
+               actualizaraImagen = true
+           }
+           dismiss(animated: true, completion: nil)
+       }
+
+       // Método delegado para manejar la cancelación de la selección de imágenes desde la galería
+    @objc func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+           dismiss(animated: true, completion: nil)
+       }
+    
+    
+    
     func configuracionInicial(){
         
         scrollView.delegate = self
@@ -181,6 +224,14 @@ class MiPerfilController: UIViewController,  UIScrollViewDelegate, UITextFieldDe
                                 let correo = json["correo"].stringValue
                                 let fechaNacRaw = json["fecha_nac_raw"].stringValue
                                 
+                                let hayimagen = json["hayimagen"].int ?? 0
+                                
+                                if(hayimagen == 1){
+                                    let imagen = json["imagen"].string ?? ""
+                                    self.setearImagen(imagen: imagen)
+                                }
+                                
+                                
                                 self.fechaNacimiento = fechaNacRaw
                                 
                                 self.setearDatos(nombre: nombre, apellido: apellido, fechaNac: fechaNacRaw, correo: correo)
@@ -213,8 +264,16 @@ class MiPerfilController: UIViewController,  UIScrollViewDelegate, UITextFieldDe
             MBProgressHUD.hide(for: self.view, animated: true)
         })
         .disposed(by: disposeBag)
+    }
+    
+    
+    func setearImagen(imagen: String){
+                
+        let union = baseUrlImagen+imagen
+            imgPerfil.sd_setImage(with: URL(string: "\(union)"), placeholderImage: UIImage(named: "fotodefecto"))
         
     }
+    
     
     
     func setearDatos(nombre: String, apellido: String, fechaNac: String, correo: String){
@@ -292,53 +351,110 @@ class MiPerfilController: UIViewController,  UIScrollViewDelegate, UITextFieldDe
           ]
         
         
-        Observable<Void>.create { observer in
-            let request = AF.request(encodeURL, method: .post, parameters: parameters, headers: headers)
-                .responseData { response in
-                    switch response.result {
-                    case .success(let data):
-                                                
-                        MBProgressHUD.hide(for: self.view, animated: true)
-                        let json = JSON(data)
-                                                
-                        if let successValue = json["success"].int {
-                                                        
-                            if(successValue == 1){
-                             
-                                // correo ya registrado
-                                self.correoYaRegistrado()
-                            }
-                            else if(successValue == 2){
-                                // datos actualizados
-                                self.infoActualizada()
+        if(actualizaraImagen){
+            
+            // Aquí obtén la imagen seleccionada
+            guard let image = imgPerfil.image else {
+                // Maneja el caso en el que no hay una imagen seleccionada
+                return
+            }
+
+            // Llamada a la función para cargar los datos y la imagen
+
+            
+            AF.upload(multipartFormData: { multipartFormData in
+                // Convertir la imagen a datos JPEG
+                if let imageData = image.jpegData(compressionQuality: 0.5) {
+                    // Agregar la imagen a los datos multipart
+                    multipartFormData.append(imageData, withName: "imagen", fileName: "imagen.jpg", mimeType: "image/jpeg")
+                }
+                // Agregar los otros parámetros
+                for (key, value) in parameters {
+                    if let data = "\(value)".data(using: .utf8) {
+                        multipartFormData.append(data, withName: key)
+                    }
+                }
+            }, to: encodeURL, method: .post, headers: headers)
+            .responseData { response in
+                switch response.result {
+                case .success(let data):
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    let json = JSON(data)
+                    if let successValue = json["success"].int {
+                        if successValue == 1 {
+                            self.correoYaRegistrado()
+                        } else if successValue == 2 {
+                            self.infoActualizada()
+                            self.actualizaraImagen = false
+                        } else {
+                            self.mensajeSinConexion()
+                        }
+                    } else {
+                        self.mensajeSinConexion()
+                    }
+                case .failure(_):
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    self.mensajeSinConexion()
+                }
+            }
+            
+        }else{
+            
+            Observable<Void>.create { observer in
+                let request = AF.request(encodeURL, method: .post, parameters: parameters, headers: headers)
+                    .responseData { response in
+                        switch response.result {
+                        case .success(let data):
+                                                    
+                            MBProgressHUD.hide(for: self.view, animated: true)
+                            let json = JSON(data)
+                                                    
+                            if let successValue = json["success"].int {
+                                                            
+                                if(successValue == 1){
+                                 
+                                    // correo ya registrado
+                                    self.correoYaRegistrado()
+                                }
+                                else if(successValue == 2){
+                                    // datos actualizados
+                                    self.infoActualizada()
+                                }else{
+                                    self.mensajeSinConexion()
+                                }
+                                
                             }else{
                                 self.mensajeSinConexion()
                             }
                             
-                        }else{
+                        case .failure(_):
+                            MBProgressHUD.hide(for: self.view, animated: true)
                             self.mensajeSinConexion()
                         }
-                        
-                    case .failure(_):
-                        MBProgressHUD.hide(for: self.view, animated: true)
-                        self.mensajeSinConexion()
                     }
+                
+                return Disposables.create {
+                    request.cancel()
                 }
-            
-            return Disposables.create {
-                request.cancel()
             }
-        }
-        .retry()
-        .subscribe(onNext: {
-            // Hacer algo cuando la solicitud tenga éxito
+            .retry()
+            .subscribe(onNext: {
+                // Hacer algo cuando la solicitud tenga éxito
+                
+            }, onError: { error in
+                MBProgressHUD.hide(for: self.view, animated: true)
+                self.mensajeSinConexion()
+            })
+            .disposed(by: disposeBag)
             
-        }, onError: { error in
-            MBProgressHUD.hide(for: self.view, animated: true)
-            self.mensajeSinConexion()
-        })
-        .disposed(by: disposeBag)
+        }
+        
     }
+    
+    
+  
+    
+    
     
     func infoActualizada(){
         let mensaje = TextoIdiomaController.localizedString(forKey: "actualizado")

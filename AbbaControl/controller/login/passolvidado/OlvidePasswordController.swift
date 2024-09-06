@@ -97,15 +97,9 @@ class OlvidePasswordController: UIViewController, UIScrollViewDelegate, UITextFi
                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), // tamaño letra
                NSAttributedString.Key.foregroundColor: UIColor.white,
             ])
-            
-            let btnContinuarAtributoPress = NSAttributedString(string: textContinuar, attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), // tamaño letra
-                NSAttributedString.Key.foregroundColor: UIColor.gray,
-            ])
-    
+                
             btnContinuar.setAttributedTitle(btnContinuarAtributo, for: .normal)
-            btnContinuar.setAttributedTitle(btnContinuarAtributoPress, for: .highlighted)
-                        
+                          
             if let myCustomColor = UIColor(named: "grisAAA") {
                 edtCorreo.backgroundColor = myCustomColor
             }

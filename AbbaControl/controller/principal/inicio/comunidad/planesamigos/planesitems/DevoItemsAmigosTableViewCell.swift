@@ -9,6 +9,11 @@ import UIKit
 
 class DevoItemsAmigosTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var txtFecha: UILabel!
+    @IBOutlet weak var txtTitulo: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

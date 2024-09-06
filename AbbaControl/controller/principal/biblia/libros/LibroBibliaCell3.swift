@@ -5,4 +5,25 @@
 //  Created by Jonathan  Moran on 16/3/24.
 //
 
-import Foundation
+import UIKit
+
+class LibroBibliaCell3: UITableViewCell {
+    
+   
+    @IBOutlet weak var txtTituloPrincipal: UILabel!
+    
+    
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+    }
+
+    
+    
+    
+    
+    
+}
+

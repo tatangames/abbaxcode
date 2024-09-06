@@ -9,6 +9,24 @@ import UIKit
 
 class ComunidadTabCell1: UITableViewCell {
 
+    
+    @IBOutlet weak var btnAddAmigo: UIButton!
+    @IBOutlet weak var btnPendientes: UIButton!
+    @IBOutlet weak var btnPlanesComunidad: UIButton!
+    
+       
+    @IBAction func buttonAddAmigoTapped(_ sender: UIButton) {
+    }
+
+    @IBAction func buttonPendientesTapped(_ sender: UIButton) {
+    }
+    
+    @IBAction func btnPlanesComunidad(_ sender: UIButton) {
+    }
+    
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

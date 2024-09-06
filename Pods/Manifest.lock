@@ -1,15 +1,19 @@
 PODS:
-  - Alamofire (5.9.0)
+  - Alamofire (5.9.1)
+  - LZViewPager (1.3.1):
+    - SnapKit (~> 5.6.0)
   - MBProgressHUD (1.2.0)
-  - RxSwift (6.6.0)
-  - SDWebImage (5.19.0):
-    - SDWebImage/Core (= 5.19.0)
-  - SDWebImage/Core (5.19.0)
-  - SwiftyJSON (5.0.1)
-  - Toast-Swift (5.1.0)
+  - RxSwift (6.7.1)
+  - SDWebImage (5.19.1):
+    - SDWebImage/Core (= 5.19.1)
+  - SDWebImage/Core (5.19.1)
+  - SnapKit (5.6.0)
+  - SwiftyJSON (5.0.2)
+  - Toast-Swift (5.1.1)
 
 DEPENDENCIES:
   - Alamofire
+  - LZViewPager
   - MBProgressHUD
   - RxSwift
   - SDWebImage
@@ -19,20 +23,24 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - LZViewPager
     - MBProgressHUD
     - RxSwift
     - SDWebImage
+    - SnapKit
     - SwiftyJSON
     - Toast-Swift
 
 SPEC CHECKSUMS:
-  Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  LZViewPager: ff4dbc601c4591e5a41bf39b0998218679e0673f
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
-  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
-  SDWebImage: 981fd7e860af070920f249fd092420006014c3eb
-  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
-  Toast-Swift: dd369e68ee529f542c65bd0d0c6c50cd743cf6f2
+  RxSwift: b9a93a26031785159e11abd40d1a55bcb8057e52
+  SDWebImage: 40b0b4053e36c660a764958bff99eed16610acbb
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
+  Toast-Swift: 7a03a532afe3a560d4044bc7c237e2864d295173
 
-PODFILE CHECKSUM: 0f5c4af6f359fc3b667d735321f5eb0a29aa8739
+PODFILE CHECKSUM: d02b1a802ee74df2d16da1c49a7eb7307dd98752
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2

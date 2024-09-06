@@ -9,4 +9,8 @@ import UIKit
 
 class InicioCell7Collect: UICollectionViewCell {
     
+    @IBOutlet weak var vista: UIView!
+    @IBOutlet weak var txtNombre: UILabel!
+    @IBOutlet weak var imgFoto: UIImageView!
+    
 }
